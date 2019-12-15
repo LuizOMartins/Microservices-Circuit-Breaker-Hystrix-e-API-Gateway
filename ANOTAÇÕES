@@ -1,0 +1,34 @@
+Maria DB 10.3.15
+
+No overview inicial do curso. Aula 1 - tinha mais Banco de dados.
+
+Problematização:  instancias de microserviços com demora.
+Conseguencia:  Threads agarradas (enfileramento).
+Solução:
+Monitorar requisições e tempo limite para solução de uma requisição.
+
+
+Circuit Break ( Errar rapido):  
+exemplo: cortar um requisição que esta demorando.
+
+Fallback: em um requisição com erro ao inves de retornar um erro ao usuário, pode ser
+implementado uma função para  devolver algo diferente. (por exemplo: parte da requisição/aviso).
+
+
+->  O Circuit Break e o Fallback tem implementação com Hystrix -  Netflix OSS.
+
+Adicionar Hystrix:  edit starter.
+
+Ver thread:
+
+Modo debub >  executar com breakpoint.
+
+-> Problema:Could not find tools.jar in the active JRE - Spring Tools Suite
+
+--vm
+C:\Program Files\Java\jre1.8.0_221\bin\java.exe
+-> no arquvo SpringToolSuit.ini
+->  Copiei o tools.jar do jdk para o jre --> SOLUÇÃO.
+
+Erro:Unable to install breakpoint due to missing line number attributes.
+
