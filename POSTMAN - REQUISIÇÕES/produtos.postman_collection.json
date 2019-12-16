@@ -1,0 +1,29 @@
+{
+	"info": {
+		"_postman_id": "6f08f4a7-8551-4685-b7d1-f688b8f393bf",
+		"name": "produtos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get produtos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/produto/df",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"produto",
+						"df"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

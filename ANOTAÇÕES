@@ -1,4 +1,12 @@
-Maria DB 10.3.15
+-----------------------------------------------------------
+Ambiente:
+Maria DB 10.3.15 root root / 3307
+C:\Program Files\Java\jre1.8.0_221\bin\java.exe
+STS: 4-4.4.0
+Apache JMeter 5.1.1
+
+-----------------------------------------------------------
+
 
 No overview inicial do curso. Aula 1 - tinha mais Banco de dados.
 
@@ -32,3 +40,62 @@ C:\Program Files\Java\jre1.8.0_221\bin\java.exe
 
 Erro:Unable to install breakpoint due to missing line number attributes.
 
+-----------------------------------------
+A razão pela qual isso acontece é porque:
+
+Sempre que você define um ponto de interrupção no Eclipse / STS, o IDE tenta definir o ponto de interrupção na VM se você iniciar um aplicativo. É o que acontece no seu caso quando você executa o aplicativo de inicialização no modo de depuração.
+
+Para cada classe que é carregada na JVM, o IDE verifica se precisa definir um ponto de interrupção ou não. Se ele decidir definir o ponto de interrupção, ele tentará fazê-lo (usando as informações da definição de ponto de interrupção no IDE, incluindo seu número de linha, já que você geralmente define pontos de interrupção de linha em um arquivo de origem em uma determinada linha).
+
+Esta decisão (se deve definir o ponto de interrupção em uma determinada classe carregada ou não) verifica os tipos nos quais você definiu o ponto de interrupção, tipos anexos e classes internas. Isso garante que os pontos de interrupção para classes internas (mesmo classes internas anônimas) estejam configurados para a JVM (e não sejam ignorados).
+
+O Spring Boot gera uma classe interna para o seu controlador em tempo de execução (esta é a classe interna gerada pelo CGLIB que aparece na mensagem de erro). Quando a JVM carrega essa classe, ela tenta definir o ponto de interrupção do número da linha do tipo anexo (para essa classe interna). Como a classe interna gerada não possui nenhuma informação de número de linha (não precisa ter informações de número de linha), a definição do ponto de interrupção falha para essa classe interna com a mensagem de erro mencionada.
+
+Quando o IDE carrega o tipo de anexo (sua própria classe de controlador), ele também tenta definir o ponto de interrupção da linha e obtém êxito. Isso é visualizado com o marcador de verificação no marcador de ponto de interrupção.
+
+Portanto, você pode ignorar com segurança a mensagem de erro exibida. Para evitar que essa mensagem de erro seja exibida, você pode acessar as preferências (Java -> Debug) e desativar "Avisar quando não for possível instalar o ponto de interrupção devido à falta de atributos de número de linha".
+
+-----------------------------------------
+ 
+-> F8 -resume passe para o proximo breckpoint.
+
+As Threads gerenciadas pelo Hytrix começam com hystrix.
+
+Apache JMeter: teste de performance de carga nas aplicações.
+https://jmeter.apache.org/download_jmeter.cgi 
+
+--> O Hystrix por default quando acontece muitos erros na requisiçao ele manda direto para o fallback.
+- e de tempo em tempo ele verifica a requisição para ver se já esta okay.
+
+-----------------------------------------
+
+
+Timeout x Circiut Breaker ?
+
+Circuit Breaker:
+-fechar o circuito
+-evitando que uma requisição fora dos parametros seja executadas, ate´que o microserviço volte a operar normalmente.
+-analise das requisições anteriores
+- decide se repassa as requisições vindas do cliente para o microserviço.
+- Hytrix verifica se o micro esta normal
+
+Timeout: 
+- Erra rapido.
+- Devolve um erro a certo tempo de processamento da requisição.
+
+
+Circiut Breaker vs Fallback:
+O circuit breaker do Hystrix executa o processamento em umca thread separada. Quando o tempo limite é excedido
+o Hystrix mata a Thread, caso configurado, e chama uma Fallback para tratamento de erro.
+
+-Fallback realiza o tratamento de uma interrupção da Thread efetuada pelo Circuit Breaker.
+
+
+Bulkhead: agrupar  e alocar Threads para processamentos diferentes. Dessa forma mesmo que uma das chamadas do microserviço
+que sofre lentidão por causa de uma integração com problema de performânce, não indisponibiliza todas as outras chamadas do mesmo microserviço.
+
+--------------------------------------
+
+-> BulkHead na prática.
+stopped: 913
+GET: NOT FOUND.

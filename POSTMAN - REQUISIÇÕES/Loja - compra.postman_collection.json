@@ -1,0 +1,45 @@
+{
+	"info": {
+		"_postman_id": "91ebce2d-1cd1-4ab9-958a-13e473f3e4b3",
+		"name": "Loja - compra",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "post compra",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"itens\": [\n\t\t{\n\t\t\t\"id\":  1,\n\t\t\t\"quantidade\": 10\n\t\t}\n\t],\n\t\"endereco\": {\n\t\t\"rua\":  \"Rua da Maria\",\n\t\t\"numero\": 123,\n\t\t\"estado\": \"GO\"\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/compra",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"compra"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
